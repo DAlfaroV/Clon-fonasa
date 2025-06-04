@@ -1,0 +1,4 @@
+flask
+sqlalchemy
+dotenv
+psycopg2-binary

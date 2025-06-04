@@ -1,0 +1,288 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #e1f5fe, #ffffff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  color: #333;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+}
+
+/* Logo */
+.logo {
+  width: 150px;
+  display: block;
+  margin: 0 auto 25px auto;
+}
+.volver {
+    /* Tus estilos de botón aquí */
+    display: inline-block;
+    padding: 8px 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+/* Estilos del formulario */
+#buscar-medicos {
+  background: #ffffff;
+  border-left: 6px solid #00b2e3;
+  border-radius: 15px;
+  padding: 35px;
+  width: 100%;
+  max-width: 650px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+#buscar-medicos h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #004080;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #004080;
+  font-size: 1rem;
+}
+
+input[type="text"],
+select {
+  padding: 10px;
+  border: 2px solid #cbd6e2;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #f8fbfd;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #00b2e3;
+  box-shadow: 0 0 8px rgba(0, 178, 227, 0.3);
+  outline: none;
+}
+
+.text-end {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #00b2e3, #004080);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #008fc1, #002b5c);
+  transform: scale(1.02);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+
+/* Estilos de la tabla */
+#resultados {
+  background: #ffffff;
+  border-left: 6px solid #8bc53f;
+  border-radius: 15px;
+  padding: 40px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin-top: 30px;
+}
+
+#resultados h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #004080;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+th, td {
+  padding: 15px;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+  font-size: 1rem;
+}
+
+th {
+  background: linear-gradient(135deg, #00b2e3, #004080);
+  color: white;
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background: #f9fbfd;
+}
+
+tr:hover {
+  background: #eef4f8;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #eef4f9;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #004080;
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #0277bd;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f9fafc;
+}
+
+.volver {
+  padding: 10px 20px;
+  background: #004080;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.volver:hover {
+  background: #003060;
+}
+
+.filtros {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filtros label {
+  font-weight: bold;
+  color: #333;
+}
+
+.filtros select,
+.filtros input[type="date"],
+.filtros button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.filtros button {
+  background-color: #0077cc;
+  color: white;
+  cursor: pointer;
+}
+
+.filtros button:hover {
+  background-color: #005fa3;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

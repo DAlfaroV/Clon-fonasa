@@ -1,0 +1,50 @@
+<!-- app/templates/verBonos.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bonos Comprados</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/bono.css') }}" />
+</head>
+<body>
+  <img src="{{ url_for('static', filename='image/fonasa.png') }}" alt="Logo Fonasa" class="logo" />
+  <div class="container">
+    <h2>Bonos Comprados</h2>
+
+    {% if bonos %}
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>ID Bono</th>
+            <th>Fecha Emisión</th>
+            <th>Descripción</th>
+            <th>Médico (RUT)</th>
+            <th>Copago</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for bono in bonos %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ bono.id_bono }}</td>
+            <td>{{ bono.fecha_emision }}</td>
+            <td>{{ bono.descripcion or '-' }}</td>
+            <td>{{ bono.rut_medico }}</td>
+            <td>${{ "{:,.0f}".format(bono.valor_copago) }}</td>
+            <td>${{ "{:,.0f}".format(bono.valor_total) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No tienes bonos registrados en tu región.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('index') }}" class="volver">⬅ Volver al Menú</a>
+  </div>
+</body>
+</html>

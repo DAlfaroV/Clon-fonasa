@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Actualizar Nombre y Tramo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/datos.css') }}" />
+</head>
+<body>
+
+  <div id="actualizar-datos">
+    <h2>Actualizar Nombre y Tramo</h2>
+
+    <form id="formActualizarDatos">
+      <div class="campo">
+        <label for="nombre">Nombre Completo:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez" required />
+      </div>
+
+      <div class="campo">
+        <label for="tramo">Tramo de Ingreso:</label>
+        <select id="tramo" name="tramo" required>
+          <option value="">-- Seleccione Tramo --</option>
+          <option value="A">Tramo A</option>
+          <option value="B">Tramo B</option>
+          <option value="C">Tramo C</option>
+          <option value="D">Tramo D</option>
+        </select>
+      </div>
+
+      <div class="text-end">
+        <button type="submit">Actualizar</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('formActualizarDatos').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const tramo = document.getElementById('tramo').value;
+
+      console.log("Nombre:", nombre);
+      console.log("Tramo:", tramo);
+
+      alert("Datos actualizados correctamente.");
+    });
+  </script>
+
+</body>
+</html>

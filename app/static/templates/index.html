@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FONASA - Beneficiario</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
+</head>
+<body>
+
+  
+  <div class="container" id="login">
+    <img src="{{ url_for('static', filename='image/fonasa.png') }}" alt="Logo Fonasa" class="logo" />
+    <h2>Iniciar Sesión</h2>
+    <input type="text" id="rut" placeholder="RUT del Beneficiario" />
+    <input type="password" id="clave" placeholder="Contraseña" />
+    <button onclick="iniciarSesion()">Ingresar</button>
+  </div>
+
+  <div class="container menu" id="menu">
+    <h2>Menú Principal</h2>
+    <button onclick="comprarBono()">🛒 Comprar Bono</button>
+    <button onclick="verBonos()">📄 Ver Bonos Comprados</button>
+  </div>
+
+  <script>
+    function iniciarSesion() {
+      const rut = document.getElementById('rut').value;
+      const clave = document.getElementById('clave').value;
+
+      if (!rut || !clave) {
+        alert("Por favor completa ambos campos.");
+        return;
+      }
+
+      if (rut === "12345678-9" && clave === "1234") {
+        document.getElementById('login').style.display = "none";
+        document.getElementById('menu').style.display = "flex";
+      } else {
+        alert("RUT o clave incorrectos");
+      }
+    }
+
+    function comprarBono() {
+      location.href = "{{ url_for('comprar_bono') }}";
+    }
+
+    function verBonos() {
+      location.href = "{{ url_for('ver_bono') }}";
+    }
+  </script>
+</body>
+</html>
