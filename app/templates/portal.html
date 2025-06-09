@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard FONASA</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
+</head>
+<body>
+
+  <div class="container menu" id="menu" style="display: flex; flex-direction: column; gap: 15px;">
+    <h2>Menú Principal</h2>
+    <p>Bienvenido, {{ session['nombre'] }} (Tramo {{ session['tramo'] }})</p>
+    <button onclick="comprarBono();">🛒 Comprar Bono</button>
+    <button onclick="verBonos();">📄 Ver Bonos Comprados</button>
+    <button onclick="actualizarDatos();">✏️ Actualizar Datos</button>
+  </div>
+
+  <script>
+    function comprarBono() {
+      location.href = "{{ url_for('comprar_bono') }}";
+    }
+
+    function verBonos() {
+      location.href = "{{ url_for('ver_bono') }}";
+    }
+
+    function actualizarDatos() {
+      location.href = "{{ url_for('actualizar_datos') }}";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Comprar Bono Médico</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/bono.css') }}" />
+</head>
+<body>
+  <img src="{{ url_for('static', filename='image/fonasa.png') }}" alt="Logo Fonasa" class="logo" />
+
+  <div id="buscar-medicos" class="container">
+    <h2>Buscar Médicos</h2>
+
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% if mensajes %}
+        <ul class="flash-messages">
+          {% for categoria, texto in mensajes %}
+            <li class="alert-{{ categoria }}">{{ texto }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form id="formBuscarMedicos" method="get" action="{{ url_for('comprar_bono') }}">
+      <div class="form-grid">
+        <!-- Tipo de Búsqueda -->
+        <div class="form-group col-6">
+          <label for="tipoBusqueda">Tipo de Búsqueda:</label>
+          <select id="tipoBusqueda" name="tipoBusqueda" class="form-control" onchange="mostrarCamposBusqueda()">
+            <option value="nombre" {% if filtros.tipoBusqueda=='nombre' %}selected{% endif %}>Por Nombre Profesional</option>
+            <option value="rutProfesional" {% if filtros.tipoBusqueda=='rutProfesional' %}selected{% endif %}>Por RUT Profesional</option>
+          </select>
+        </div>
+
+        <!-- Valor de Búsqueda -->
+        <div class="form-group col-6" id="campoBusquedaDinamica">
+          <label for="valorBusqueda">
+            {% if filtros.tipoBusqueda=='rutProfesional' %}RUT Profesional:{% else %}Nombre Profesional:{% endif %}
+          </label>
+          <input type="text"
+                 id="valorBusqueda"
+                 name="valorBusqueda"
+                 class="form-control"
+                 placeholder="Ej: Juan Pérez"
+                 value="{{ filtros.valorBusqueda }}"/>
+        </div>
+
+        <!-- Especialidad -->
+        <div class="form-group col-4">
+          <label for="especialidad">Especialidad:</label>
+          <select id="especialidad" name="especialidad" class="form-control">
+            <option value="">-- Todas --</option>
+            {% for esp in ['cardiologia','pediatria','dermatologia','medicina_general'] %}
+              <option value="{{ esp }}"
+                {% if filtros.especialidad==esp %}selected{% endif %}>
+                {{ esp|capitalize }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Comuna -->
+        <div class="form-group col-4">
+          <label for="comuna">Comuna:</label>
+          <select id="comuna" name="comuna" class="form-control">
+            <option value="">-- Todas --</option>
+            {% for com in comunas_disponibles %}
+              <option value="{{ com }}"
+                {% if filtros.comuna==com %}selected{% endif %}>
+                {{ com }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button type="submit">Buscar Médicos</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="resultados" class="container" style="margin-top:40px;">
+    <h3>Resultados Encontrados</h3>
+
+    {% if medicos %}
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>RUT</th>
+            <th>Especialidad</th>
+            <th>Comuna</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in medicos %}
+          <tr>
+            <td>{{ m.nombre }}</td>
+            <td>{{ m.rut }}</td>
+            <td>{{ m.especialidad }}</td>
+            <td>{{ m.comuna }}</td>
+            <td>
+              <button onclick="abrirModal('{{ m.nombre }}','{{ m.especialidad }}','{{ m.rut }}')">
+                Comprar Bono
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No se encontraron médicos con esos filtros.</p>
+    {% endif %}
+  </div>
+
+  <div id="modalBono" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="cerrarModal()">&times;</span>
+      <h2>Detalle del Bono</h2>
+      <p><strong>Medico:</strong> <span id="nombreMedico"></span></p>
+      <p><strong>Especialidad:</strong> <span id="especialidadModal"></span></p>
+      <p><strong>RUT:</strong> <span id="rutModal"></span></p>
+      <p><strong>Copago:</strong> $<span id="copagoModal"></span></p>
+      <p><strong>Total:</strong> $<span id="totalModal"></span></p>
+
+      <form method="post" action="{{ url_for('confirmar_compra') }}">
+        <input type="hidden" name="id_bono" id="inputIdBono">
+        <input type="hidden" name="fecha_emision" id="inputFecha">
+        <input type="hidden" name="descripcion" id="inputDescripcion">
+        <input type="hidden" name="valor_total" id="inputValorTotal">
+        <input type="hidden" name="valor_copago" id="inputValorCopago">
+        <input type="hidden" name="valor_apagar" id="inputValorApagar">
+        <input type="hidden" name="rut_medico" id="inputRutMedico">
+        <input type="hidden" name="rut_beneficiario" value="{{ session['rut'] }}">
+        <button type="submit">Confirmar Compra</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function mostrarCamposBusqueda() {
+      const tipo = document.getElementById('tipoBusqueda').value;
+      const label = document.querySelector('#campoBusquedaDinamica label');
+      const input = document.getElementById('valorBusqueda');
+      if (tipo === 'rutProfesional') {
+        label.textContent = 'RUT Profesional:';
+        input.placeholder = 'Ej: 12345678-9';
+      } else {
+        label.textContent = 'Nombre Profesional:';
+        input.placeholder = 'Ej: Juan Pérez';
+      }
+    }
+    window.onload = mostrarCamposBusqueda;
+
+    function openModalData(nombre, especialidad, rut) {
+      // renombrar si prefieres usar otro nombre
+    }
+
+    function abrirModal(nombre, especialidad, rut) {
+      document.getElementById('nombreMedico').textContent = nombre;
+      document.getElementById('especialidadModal').textContent = especialidad;
+      document.getElementById('rutModal').textContent = rut;
+
+      const copago = Math.floor(Math.random() * 5000 + 5000);
+      const total = copago + 10000;
+
+      document.getElementById('copagoModal').textContent = copago.toLocaleString();
+      document.getElementById('totalModal').textContent = total.toLocaleString();
+
+      document.getElementById('inputIdBono').value = 'BONO-' + Date.now();
+      document.getElementById('inputFecha').value = new Date().toISOString().split('T')[0];
+      document.getElementById('inputDescripcion').value = `Bono para ${nombre}`;
+      document.getElementById('inputValorTotal').value = total;
+      document.getElementById('inputValorCopago').value = copago;
+      document.getElementById('inputValorApagar').value = total - copago;
+      document.getElementById('inputRutMedico').value = rut;
+
+      document.getElementById('modalBono').style.display = 'block';
+    }
+
+    function cerrarModal() {
+      document.getElementById('modalBono').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+UPDATE dblink_config
+   SET connstr = 'host=192.168.0.3 port=5432 dbname=fonasa user=root password=toor'
+ WHERE nombre = 'central';
+

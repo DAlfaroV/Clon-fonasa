@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FONASA - Registro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
+</head>
+<body>
+
+  {%- with mensajes = get_flashed_messages(with_categories=true) %}
+    {%- if mensajes %}
+      <div class="flash-container">
+        {% for categoria, texto in mensajes %}
+          <div class="alert alert-{{ categoria }}">{{ texto }}</div>
+        {% endfor %}
+      </div>
+    {%- endif %}
+  {%- endwith %}
+
+  <div class="container" id="login">
+    <img src="{{ url_for('static', filename='image/fonasa.png') }}" alt="Logo Fonasa" class="logo" />
+    <h2>Registro de Beneficiario</h2>
+    <form action="{{ url_for('registro') }}" method="post">
+      <input type="text" name="rut" id="rut" placeholder="RUT del Beneficiario" required />
+      <input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required />
+      <select name="tramo" id="tramo" required>
+        <option value="" disabled selected>Seleccione Tramo de Ingreso</option>
+        <option value="A">Tramo A</option>
+        <option value="B">Tramo B</option>
+        <option value="C">Tramo C</option>
+        <option value="D">Tramo D</option>
+      </select>
+      <input type="password" name="clave" id="clave" placeholder="Contraseña" required />
+      <button type="submit">Registrarse</button>
+    </form>
+    <p style="text-align:center; margin-top:15px;">
+      ¿Ya tienes cuenta? <a href="{{ url_for('index') }}">Inicia sesión aquí</a>
+    </p>
+  </div>
+
+</body>
+</html>

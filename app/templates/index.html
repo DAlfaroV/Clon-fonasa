@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FONASA - Beneficiario</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}" />
+</head>
+<body>
+
+  <div class="container" id="login">
+    <img src="{{ url_for('static', filename='image/fonasa.png') }}" alt="Logo Fonasa" class="logo" />
+    <h2>Iniciar Sesión</h2>
+    <form action="{{ url_for('login') }}" method="post">
+      <input type="text" name="rut" id="rut" placeholder="RUT del Beneficiario" required />
+      <input type="password" name="clave" id="clave" placeholder="Contraseña" required />
+      <button type="submit">Ingresar</button>
+    </form>
+  </div>
+
+</body>
+</html>
